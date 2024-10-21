@@ -87,7 +87,7 @@ int main(){
             temp2=temp2->next;
         }
         temp3=temp2->next;
-        printf("%d ",temp2->data);
+        printf("%d",temp2->data);
         temp4->next=temp3;
         temp5=temp2;
         temp2=temp2->next;
