@@ -18,19 +18,10 @@ void insert2(int data){//尾部插入
         temp2=temp2->next;
     }
     temp1->data=data;
-    temp1->next=temp2->next;//此处temp2->next==NULL，二者可替换
+    temp1->next=temp2->next;
     temp2->next=temp1;
 }
-void print(struct node* n){//打印链表
-    struct node* temp=head;
-    printf("List is:");
-    while(temp!=n){
-        printf(" %d",temp->data);
-        temp=temp->next;
-    }
-    printf(" %d",temp->data);
-}
-void delete(int n){
+void delete(int n){//删除节点
     struct node* temp1=head;
     if(n==1){
         head=temp1->next;
@@ -41,7 +32,7 @@ void delete(int n){
         temp1=temp1->next;
     }
     struct node* temp2=temp1->next;
-    temp1->next=temp2->next;//重新建立链接关系
+    temp1->next=temp2->next;//重新建立链接
     free(temp2);
 }
 int main(){
@@ -50,8 +41,8 @@ int main(){
     first->data=1;
     first->next=NULL;
     char c;
-    int a[3],n;
-    scanf("%c",&c);
+    int a[3],n,j=0;
+    scanf("%c",&c);//保留了输入
     while(c!='C'){
         if(c=='H'){
             for(int i=0;i<3;i++){
@@ -73,11 +64,36 @@ int main(){
         }
         scanf("%c",&c);
     }
-    struct node* temp2=head;
-    while(temp2->next!=NULL){
-        temp2=temp2->next;
+    struct node* temp1=head;
+    struct node* temp2;//首先为起始节点，然后为执行节点
+    struct node* temp3;//用于重新建立链接关系
+    struct node* temp4;//起始/执行节点的上一节点
+    struct node* temp5;//用于释放执行节点的空间
+    while(temp1->next!=NULL){
+        temp4=temp1;
+        temp1=temp1->next;
+        if(temp1->data==3){//获取起始节点，temp4为起始节点的上一节点
+            temp2=temp1;
+            break;
+        }
     }
-    temp2->next=head;//将链表首尾相连
-    print(temp2);//以原来的首尾打印链表
+    while(temp1->next!=NULL){
+        temp1=temp1->next;
+    }
+    temp1->next=head;//将链表首尾相连
+    while(temp2->next!=temp2){//
+        for(int i=1;i<=j;i++){
+            temp4=temp2;//temp4为执行节点的上一节点
+            temp2=temp2->next;
+        }
+        temp3=temp2->next;
+        printf("%d ",temp2->data);
+        temp4->next=temp3;
+        temp5=temp2;
+        temp2=temp2->next;
+        free(temp5);
+        j++;
+    }
+    printf("%d",temp2->data);
     return 0;
 }
